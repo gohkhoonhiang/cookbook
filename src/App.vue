@@ -9,25 +9,105 @@
       </v-bottom-navigation>
 
       <v-main>
+
+        <v-container>
+          <Controls
+            :temperature-unit.sync="temperature_unit"
+            :volume-unit.sync="volume_unit"
+          />
+        </v-container>
+
+        <v-spacer></v-spacer>
+
+        <v-container>
+          <v-tabs
+            v-model="tab"
+            show-arrows
+          >
+
+            <v-tab key="conversion_tab">
+              <v-icon left small>mdi-swap-horizontal-bold</v-icon>
+              Conversion
+            </v-tab>
+
+            <v-tab key="recipes_tab">
+              <v-icon left small>mdi-book-open-outline</v-icon>
+              Recipes
+            </v-tab>
+
+            <v-tab key="help_tab">
+              <v-icon left small>mdi-help</v-icon>
+              Help
+            </v-tab>
+
+            <v-tab-item key="conversion_tab">
+              <Calculator
+                :temperature_unit="temperature_unit"
+                :volume_unit="volume_unit"
+              />
+            </v-tab-item>
+
+            <v-tab-item key="recipes_tab">
+              <Recipes
+                :temperature_unit="temperature_unit"
+                :volume_unit="volume_unit"
+              />
+            </v-tab-item>
+
+            <v-tab-item key="help_tab">
+              <Help/>
+            </v-tab-item>
+
+          </v-tabs>
+        </v-container>
       </v-main>
     </v-app>
   </div>
 </template>
 
 <script>
+import Controls from './components/Controls';
+import Calculator from './components/Calculator';
+import Recipes from './components/Recipes';
+import Help from './components/Help';
+
 export default {
   name: 'App',
 
   components: {
+    Controls,
+    Calculator,
+    Recipes,
+    Help,
   },
 
   created() {
   },
 
   data: () => ({
+    tab: null,
+    temperature_unit: 'C',
+    volume_unit: 'SI',
+
   }),
 
   computed: {
+    radio_group_display: function() {
+      let vm = this;
+      const { xs, sm } = vm.$vuetify.breakpoint;
+
+      if (xs || sm) {
+        return {
+          row: false,
+          column: true
+        };
+      } else {
+        return {
+          row: true,
+          column: false
+        };
+      }
+    },
   },
 
   methods: {

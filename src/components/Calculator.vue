@@ -52,7 +52,8 @@
               >
                 <v-text-field
                   v-model="conversion_from_value"
-                  type="text"
+                  type="number"
+                  step="0.01"
                   hint="from how many"
                   clearable
                   persistent-hint
@@ -84,7 +85,8 @@
               >
                 <v-text-field
                   v-model="conversion_to_value"
-                  type="text"
+                  type="number"
+                  step="0.01"
                   hint="to how many"
                   clearable
                   persistent-hint
@@ -167,6 +169,7 @@
                 <v-text-field
                   v-model="temperature_from_value"
                   type="number"
+                  step="0.01"
                   :hint="temperature_from_unit"
                   clearable
                   persistent-hint
@@ -191,6 +194,7 @@
                 <v-text-field
                   v-model="temperature_to_value"
                   type="number"
+                  step="0.01"
                   :hint="temperature_to_unit"
                   clearable
                   persistent-hint
@@ -520,7 +524,7 @@
             return;
           }
 
-          vm.conversion_to_value = to_value;
+          vm.conversion_to_value = to_value.toFixed(2);
         } else {
           let from_value = null;
 
@@ -529,7 +533,7 @@
             from_value = conversion_rate.si_amount * vm.conversion_to_value / conversion_rate.us_amount
           } else {
             // us <- si
-            vm.conversion_from_value = conversion_rate.us_amount * vm.conversion_to_value / conversion_rate.is_amount
+            from_value = conversion_rate.us_amount * vm.conversion_to_value / conversion_rate.is_amount
           }
 
           if (isNaN(from_value)) {
@@ -537,7 +541,7 @@
             return;
           }
 
-          vm.conversion_from_value = from_value;
+          vm.conversion_from_value = from_value.toFixed(2);
         }
       },
 

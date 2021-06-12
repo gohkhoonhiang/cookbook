@@ -92,22 +92,6 @@ export default {
   }),
 
   computed: {
-    radio_group_display: function() {
-      let vm = this;
-      const { xs, sm } = vm.$vuetify.breakpoint;
-
-      if (xs || sm) {
-        return {
-          row: false,
-          column: true
-        };
-      } else {
-        return {
-          row: true,
-          column: false
-        };
-      }
-    },
   },
 
   methods: {
